@@ -25,18 +25,6 @@ provider "vsphere" {
   allow_unverified_ssl = true
 }
 
-# Create a file
-/*resource "vsphere_file" "new_vm_copy" {
-  source_datacenter = "Datacenter"
-  datacenter        = "Datacenter"
-  source_datastore  = "TINTRI-01"
-  datastore         = "TINTRI-01"
-  source_file       = "/Win2K-01/Win2K-01.vmdk"
-  create_directories = "true"
-  destination_file  = "/${vsphere_folder.new_vm.path}/${vsphere_folder.new_vm.path}.vmdk"
-}*/
-
-# Create a virtual machine within the folder
 
 resource "null_resource" "pre-flight" {
   provisioner "local-exec" {
@@ -51,7 +39,6 @@ resource "vsphere_virtual_machine" "new" {
   datacenter    = "Datacenter"
   folder = "${var.folder}"
   cluster = "7200-Cluster"
-  /*resource_pool = "${var.pool}"*/
 
   vcpu   = 2
   memory = 4096
@@ -68,23 +55,8 @@ resource "vsphere_virtual_machine" "new" {
 
   network_interface {
     label              = "7200VLAN101"
-    /*ipv4_address       = "172.17.101.253"
-    ipv4_prefix_length = "24"
-    ipv4_gateway = "172.17.101.1"*/
   }
-  # Copies into the file /home/root/.ssh/authorized_keys
-  /*provisioner "file" {
-    source     = "./${var.ssh_public_key}"
-    destination = ".ssh/authorized_keys"
-  }*/
 
-  /*connection = {
-      user = "${var.ssh_user}"
-      private_key = "${file("${var.ssh_private_key}")}"
-      host = "${self.network_interface.0.ipv4_address}"
-  }*/
-
-  /*domain = "${var.domain}"*/
   dns_servers = ["${var.dns_server1}", "${var.dns_server2}"]
   count = "${var.control_count}"
 
