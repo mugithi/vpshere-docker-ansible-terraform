@@ -1,0 +1,8 @@
+../.DS_Store
+docker.pub
+docker
+terraform.tfstate
+terraform.tfstate.backup
+ansible-install-docker.retry
+vars.tf
+terraform.tfstate.lock.info
